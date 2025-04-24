@@ -33,9 +33,7 @@ jobs:
           name: java-app
           # path: '${{ github.workspace }}/build/libs/*.jar'  # ✅ Upload any jar in build/libs
           path: 'build/libs/spring-gradle-app-0.0.1-SNAPSHOT.jar'
-yaml
-Copy
-Edit
+
 
   deploy:
     runs-on: ubuntu-latest
