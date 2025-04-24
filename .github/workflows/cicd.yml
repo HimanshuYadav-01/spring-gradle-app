@@ -1,0 +1,41 @@
+name: CI/CD for Spring Boot Gradle App
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+
+    - name: Build app with Gradle
+      run: ./gradlew build
+
+    - name: Copy JAR to Azure VM
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: ${{ secrets.AZURE_VM_IP }}
+        username: ${{ secrets.AZURE_VM_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        source: "build/libs/*.jar"
+        target: "~/spring-app"
+
+    - name: Run app on Azure VM
+      uses: appleboy/ssh-action@v0.1.8
+      with:
+        host: ${{ secrets.AZURE_VM_IP }}
+        username: ${{ secrets.AZURE_VM_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          pkill -f 'java.*.jar' || true
+          cd ~/spring-app
+          nohup java -jar *.jar > app.log 2>&1 &
