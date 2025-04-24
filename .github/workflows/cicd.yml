@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read  # This is required for actions/checkout
+      contents: read  # Required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
@@ -22,16 +22,16 @@ jobs:
           distribution: 'temurin'
 
       - name: Make gradlew executable
-        run: chmod +x ./gradlew  # Make gradlew executable
+        run: chmod +x ./gradlew  # ✅ Making gradlew executable
 
       - name: Build with Gradle
-        run: ./gradlew build --no-daemon
+        run: ./gradlew build --no-daemon  # ✅ Building using Gradle
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/build/libs/spring-gradle-app-0.0.1-SNAPSHOT.jar'
+          path: '${{ github.workspace }}/build/libs/*.jar'  # ✅ Upload any jar in build/libs
 
   deploy:
     runs-on: ubuntu-latest
@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'spring-gradle-app'
           slot-name: 'Production'
-          package: '${{ github.workspace }}/build/libs/spring-gradle-app-0.0.1-SNAPSHOT.jar'
+          package: '*.jar'  # ✅ Wildcard used to avoid path mismatch
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5E7CD5A6719B4611973313BAF78286BE }}
