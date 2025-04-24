@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/build/libs/*.jar'
+          path: 'build/libs/spring-gradle-app-0.0.1-SNAPSHOT.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -54,5 +54,6 @@ jobs:
           slot-name: 'Production'
           # package: '*.jar'
           # package: '${{ github.workspace }}/build/libs/spring-gradle-app-0.0.1-SNAPSHOT.jar'
-          package: 'spring-gradle-app-0.0.1-SNAPSHOT.jar'
+          # package: 'spring-gradle-app-0.0.1-SNAPSHOT.jar'
+          package: './spring-gradle-app-0.0.1-SNAPSHOT.jar' 
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5E7CD5A6719B4611973313BAF78286BE }}

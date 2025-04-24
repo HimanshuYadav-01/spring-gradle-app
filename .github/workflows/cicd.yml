@@ -55,5 +55,6 @@ jobs:
           app-name: 'spring-gradle-app'
           slot-name: 'Production'
           # package: '*.jar'  # ✅ Wildcard used to avoid path mismatch
-          package: 'build/libs/spring-gradle-app-0.0.1-SNAPSHOT.jar'
+          # package: 'build/libs/spring-gradle-app-0.0.1-SNAPSHOT.jar'
+          package: './spring-gradle-app-0.0.1-SNAPSHOT.jar' 
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5E7CD5A6719B4611973313BAF78286BE }}
