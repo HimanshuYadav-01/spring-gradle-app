@@ -1,9 +1,9 @@
-name: CI/CD to Azure App Service - Spring Boot Gradle
+name: 🚀 CI/CD to Azure App Service - Spring Boot Gradle
 
 on:
   push:
     branches:
-      - main
+      - main  # Ye default branch hai, agar koi aur ho to yeh change karo
 
 jobs:
   build-and-deploy:
@@ -20,11 +20,11 @@ jobs:
         distribution: 'temurin'
 
     - name: Build with Gradle
-      run: ./gradlew build --no-daemon
+      run: ./gradlew build --no-daemon  # Gradle build command
 
-    - name: Deploy to Azure App Service
+    - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
-        app-name: spring-gradle-app
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: build/libs/*.jar
+        app-name: 'spring-gradle-app'  # Azure App Service ka name
+        slot-name: 'production'
+        package: build/libs/*.jar  # JAR location jo Gradle build ke baad milega
