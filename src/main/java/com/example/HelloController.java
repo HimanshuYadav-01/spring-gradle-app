@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
     @GetMapping("/")
     public String hello() {
-        return "Hello from Azure VM!";
+        return "Hello we have succefully implemented cicd on simple java application using gradel for building the app";
     }
 }
